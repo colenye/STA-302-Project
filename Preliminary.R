@@ -37,3 +37,6 @@ model <- lm(BPM ~ Age + Pos + PTS + ORB + AST, data = table)
 summary(model)
 
 predicted_bpm <- predict(model, data.frame(Age=50, Pos="PG", PTS=3, ORB=1, AST=5))
+
+par(mfrow = c(2, 2))
+plot(model)
