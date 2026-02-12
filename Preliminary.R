@@ -38,5 +38,8 @@ summary(model)
 
 predicted_bpm <- predict(model, data.frame(Age=50, Pos="PG", PTS=3, ORB=1, AST=5))
 
+png("diagnostic_plots_for_proposal.png", 
+    width = 10, height = 10, units = "in", res = 300)
 par(mfrow = c(2, 2))
 plot(model)
+dev.off()
