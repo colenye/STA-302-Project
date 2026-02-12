@@ -6,13 +6,13 @@ all_bpm = list()
 for (i in seq_along(seasons)) {
   season = seasons[i]
 
-  predictor_source = read.csv(paste0("szn", season, ".txt"))
+  predict_source = read.csv(paste0("szn", season, ".txt"))
   target_source = read.csv(paste0("szn", season, "Advanced.txt"))
   basic$Rk = NULL
 
   # Avoid duplicate players within a season
-  basic_unique = basic[!duplicated(basic$player_id, fromLast = TRUE), ]
-  advanced_unique = advanced[!duplicated(advanced$player_id, fromLast = TRUE), ]
+  basic_unique = predict_source[!duplicated(basic$player_id, fromLast = TRUE), ]
+  advanced_unique = target_source[!duplicated(advanced$player_id, fromLast = TRUE), ]
 
   vars = basic_unique[1:min(nrow(basic_unique), 500), 
                       c("player_id", "Age", "Pos", "PTS", "ORB", "AST")]
