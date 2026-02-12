@@ -3,7 +3,7 @@ seasons = c(25, 26)
 all_vars = list()
 all_bpm = list()
 
-for i in seq_along(seasons)) {
+for (i in seq_along(seasons)) {
   season = seasons[i]
 
   predictor_source = read.csv(paste0("szn", season, ".txt"))
