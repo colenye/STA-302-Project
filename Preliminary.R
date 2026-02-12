@@ -17,7 +17,7 @@ BPMTable =  rbind(szn26BPM, szn25BPM)
 
 
 
-if (nrow(table == nrow(BPMTable))){
+if (nrow(table) == nrow(BPMTable)){
   table = cbind(table, BPMTable)  
 }
 
