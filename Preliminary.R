@@ -98,3 +98,87 @@ png("diagnostic_plots_boxcox.png", width = 10, height = 10, units = "in", res = 
 par(mfrow = c(2, 2))
 plot(model_bc, main = "Box-Cox Transformed Model Diagnostics")
 dev.off()
+
+# ---- table for coefficients, standard errors, confidence intervals and p-value --
+
+# Extract coefficient summary
+coef_summary <- summary(model)$coefficients
+
+# Compute 95% confidence intervals
+conf_int <- confint(model, level = 0.95)
+
+# Combine into one table
+final_table <- data.frame(
+  Predictor = rownames(coef_summary),
+  Coefficient = coef_summary[, "Estimate"],
+  Std_Error = coef_summary[, "Std. Error"],
+  CI_Lower = conf_int[, 1],
+  CI_Upper = conf_int[, 2],
+  P_Value = coef_summary[, "Pr(>|t|)"]
+)
+
+# Print table
+print(final_table)
+
+write.csv(final_table, "final_model_summary_table.csv", row.names = FALSE)
+
+# ---- performance metrics ---------------------------------------------
+
+model_summary <- summary(model)
+
+# R-squared
+r_squared <- model_summary$r.squared
+
+# Adjusted R-squared
+adj_r_squared <- model_summary$adj.r.squared
+
+# AIC
+aic_value <- AIC(model)
+
+# BIC
+bic_value <- BIC(model)
+
+performance_metrics <- data.frame(
+  Metric = c("R-squared", "Adjusted R-squared", "AIC", "BIC"),
+  Value = c(r_squared, adj_r_squared, aic_value, bic_value)
+)
+
+print(performance_metrics)
+
+# Actual observed BPM values
+actual <- nba_data_clean$BPM
+
+# Predicted BPM values from the model
+pred <- predict(model)
+
+# Mean Absolute Error (MAE)
+MAE <- mean(abs(actual - pred))
+
+# Mean Squared Error (MSE)
+MSE <- mean((actual - pred)^2)
+
+# Root Mean Squared Error (RMSE)
+RMSE <- sqrt(MSE)
+
+# Median Absolute Error (MedAE)
+MedAE <- median(abs(actual - pred))
+
+# Mean Absolute Percentage Error (MAPE)
+MAPE <- mean(abs((actual - pred) / actual)) * 100
+
+# Root Mean Squared Log Error (RMSLE)
+# Requires positive values, so shift if necessary
+shift_log <- abs(min(actual, pred)) + 1
+RMSLE <- sqrt(mean((log(pred + shift_log) - log(actual + shift_log))^2))
+
+# Print results
+cat("\nModel Performance Metrics:\n")
+cat("MAE:", MAE, "\n")
+cat("MSE:", MSE, "\n")
+cat("RMSE:", RMSE, "\n")
+cat("Median Absolute Error:", MedAE, "\n")
+cat("MAPE:", MAPE, "%\n")
+cat("RMSLE:", RMSLE, "\n")
+
+var(bpm)
+sqrt(var(bpm))
