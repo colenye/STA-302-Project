@@ -74,7 +74,7 @@ cooks_d = cooks.distance(model_raw)
 stud_resid = rstudent(model_raw)
 leverage = hatvalues(model_raw)
 
-remove_idx = which(cooks_d > (16 / nrow(nba_data)) & abs(stud_resid) > 3)
+remove_idx = which(cooks_d > (4 / nrow(nba_data)) & abs(stud_resid) > 3)
 nba_data_clean = nba_data[-remove_idx, ]
 
 cat("Observations removed:", length(remove_idx), "\n")
@@ -100,7 +100,6 @@ plot(cooks_d, type = "h",
      ylab = "Cook's Distance", xlab = "Observation Index",
      main = "Cook's Distance - Baseline Model")
 abline(h = 4 / nrow(nba_data), col = "red", lty = 2)
-abline(h = 16 / nrow(nba_data), col = "orange", lty = 2)
 legend("topright", legend = c("4/n", "16/n"),
        col = c("red", "orange"), lty = 2, cex = 0.8)
 dev.off()
