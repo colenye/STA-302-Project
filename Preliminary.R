@@ -140,10 +140,6 @@ cat("DRB p-value:", summary(model_DRB)$coefficients["DRB", "Pr(>|t|)"], "\n")
 # Final model: BPM ~ Age + Pos + PTS + ORB + AST + STL + BLK
 
 # ---- Diagnostic Plots - Final Model -----------------------------------------
-png("diagnostic_plots_baseline.png", width = 10, height = 10, units = "in", res = 300)
-par(mfrow = c(2, 2))
-plot(model_raw, main = "Baseline Model Diagnostics")
-dev.off()
 
 png("diagnostic_plots_final.png", width = 10, height = 10, units = "in", res = 300)
 par(mfrow = c(2, 2))
